@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import SignupForm from '../components/SignupForm';
 
 function CustomerSignup() {
@@ -9,9 +10,10 @@ function CustomerSignup() {
   const [address, setAddress] = useState('');
   const [phone_number, setPhoneNumber] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form test:', {
+    try {
+     const response = await axios.post('',  {
       username,
       email,
       password,
@@ -19,6 +21,10 @@ function CustomerSignup() {
       address,
       phone_number,
     });
+        console.log('Customer registered:', response.data);
+    } catch (error) {
+        console.error('Signup failed:', error.response?.data || error.message);
+    }
   };
 
   return (
