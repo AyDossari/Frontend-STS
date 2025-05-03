@@ -51,16 +51,17 @@ function SignupForm(props) {
           />
         </div>
 
-        <div>
-          <label htmlFor="address">Address</label>
-          <input
-            id="address"
-            name="address"
-            value={props.address}
-            onChange={(event) => props.setAddress(event.target.value)}
-          />
-        </div>
-
+        {props.showAddress && (
+          <div>
+            <label htmlFor="address">Address</label>
+            <input
+              id="address"
+              name="address"
+              value={props.address}
+              onChange={(event) => props.setAddress(event.target.value)}
+            />
+          </div>
+        )}
         <div>
           <label htmlFor="phone_number">Phone Number</label>
           <input
