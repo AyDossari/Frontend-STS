@@ -10,10 +10,12 @@ function CustomerSignup() {
   const [address, setAddress] = useState('');
   const [phone_number, setPhoneNumber] = useState('');
 
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-     const response = await axios.post('',  {
+     const response = await axios.post(`${apiUrl}/signup/customer/`,  {
       username,
       email,
       password,
