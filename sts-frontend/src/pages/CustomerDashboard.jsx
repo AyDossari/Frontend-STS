@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import axios from 'axios'
 import ProductCard from '../components/ProductsCard'
+import { authorizedRequest } from '../lib/api'
 
 function CustomerDashboard() {
     const [products, setProducts] = useState([])
@@ -9,7 +9,7 @@ function CustomerDashboard() {
     async function fetchCustomerProducts() {
         const apiUrl = import.meta.env.VITE_API_URL;
         try {
-            const response = await axios.get(`${apiUrl}/products/`)
+            const response = await authorizedRequest('get', '/products/')
             setProducts(response.data)
         } catch (err) {
             console.error(err)

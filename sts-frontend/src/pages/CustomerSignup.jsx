@@ -46,6 +46,7 @@ function CustomerSignup() {
       setFullName={setFullName}
       address={address}
       setAddress={setAddress}
+      showAddress={true}
       phone_number={phone_number}
       setPhoneNumber={setPhoneNumber}
     />

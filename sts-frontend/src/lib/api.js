@@ -20,4 +20,42 @@ async function refreshAccessToken() {
     }
 }
 
-export { setTokens, refreshAccessToken }
+async function authorizedRequest(method, url, data = null) {
+    const config = {
+        method,
+        url: `${baseUrl}${url}`,
+        headers: {}
+    }
+
+    if (data) {
+        config.data = data
+    }
+
+    let accessToken = localStorage.getItem('access_token')
+    if (accessToken) {
+        config.headers['Authorization'] = `Bearer ${accessToken}`
+    }
+
+
+    try {
+        const response = await axios(config)
+        return response
+    } catch (err) {
+        console.log(err)
+        if (err.response && err.response.status == 401) {
+            try {
+                accessToken = await refreshAccessToken()
+                config.headers['Authorization'] = `Bearer ${accessToken}`
+
+                const retriedResponse = await axios(config)
+                return retriedResponse
+            } catch (err) {
+                console.log(err)
+                window.location.href = '/signup'
+            }
+            
+        }
+    }
+}
+
+export { setTokens, authorizedRequest }
