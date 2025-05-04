@@ -26,8 +26,8 @@ function CustomerDashboard() {
 
     return (
         <>
-            {products.map(product => (
-                <ProductCard key={product.id} product={product}  />
+            {products.map(props => (
+                <ProductCard key={props.id} props={props}  />
             ))}
         </>
     )

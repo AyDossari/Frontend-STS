@@ -1,10 +1,10 @@
 import React from "react";
 
-function ProductsCard({name , status}) {
+function ProductsCard({props}) {
 return (
     <div>
-    <h4>{name}</h4>
-    <p>Status: {status}</p>
+    <h4>{props.name}</h4>
+    <p>Status: {props.status}</p>
   </div>
 );
 }
