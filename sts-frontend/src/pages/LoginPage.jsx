@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { setTokens } from '../lib/api'
 import axios from 'axios'
 import LoginForm from '../components/LoginForm'
+import { useNavigate } from 'react-router-dom'
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -10,6 +11,8 @@ function Login() {
   })
 
   const [error, setError] = useState('')
+  const navigate = useNavigate()
+
 
   const handleChange = (event) => {
     setFormData({
@@ -29,6 +32,8 @@ function Login() {
         access: response.data.access,
         refresh: response.data.refresh
       })
+      navigate('/products')
+
     } catch (err) {
       console.log(err)
       setError('Invalid username or password')
