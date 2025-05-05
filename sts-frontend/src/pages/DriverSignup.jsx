@@ -9,6 +9,7 @@ function DriverSignup() {
   const [full_name, setFullName] = useState('');
   const [vehicle_type, setVehicleType] = useState('');
   const [phone_number, setPhoneNumber] = useState('');
+  const navigate = useNavigate()
 
   const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -24,6 +25,7 @@ function DriverSignup() {
       phone_number,
     });
         console.log('Driver registered:', response.data);
+        navigate('/login')
     } catch (error) {
         console.error('Signup failed:', error.response?.data || error.message);
     }
