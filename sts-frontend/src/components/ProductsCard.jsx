@@ -1,6 +1,6 @@
 import React from "react";
 
-function ProductsCard({ props, isDetail = false }) {
+function ProductsCard({ props, isDetail = false , isDriverView = false, handlePickup }) {
   return (
     <div>
       <h4>{props.name}</h4>
@@ -12,6 +12,9 @@ function ProductsCard({ props, isDetail = false }) {
         </>
       ) : (
         <p>Status: {props.status}</p>
+      )}
+       {isDriverView && (
+        <button onClick={() => handlePickup(props.id)}>Pick Up</button>
       )}
     </div>
   );

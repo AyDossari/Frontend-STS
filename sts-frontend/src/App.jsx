@@ -6,6 +6,7 @@ import Login from './pages/LoginPage';
 import CustomerDashboard from './pages/CustomerDashboard';
 import DriverDashboard from './pages/DriverDashboard';
 import AddProduct from './pages/AddProduct';
+import AddRequest from './pages/AddRequest';
 import ProductDetail from './pages/ProductDetail';
 import EditProduct from './pages/EditProduct';
 
@@ -20,6 +21,7 @@ function App() {
         <Route path="/CustomerDashboard" element={<CustomerDashboard />} />
         <Route path="/DriverDashboard" element={<DriverDashboard />} />
         <Route path="/products/add" element={<AddProduct />} />
+        <Route path="/Request/add" element={<AddRequest />} />
         <Route path="/products/:id" element={<ProductDetail />} />
         <Route path="/products/:id/edit" element={<EditProduct />} />
       </Routes>

@@ -4,13 +4,13 @@ import { authorizedRequest } from '../lib/api'
 
 
 function DriverDashboard() {
-    const [products, setProducts] = useState([])
+    const [requests, setRequests] = useState([]);
     const [errorMsg, setError] = useState('')
 
     async function fetchDriverRequests() {
         try {
             const response = await authorizedRequest('get', '/driver-requests/')
-            setProducts(response.data)
+            setRequests(response.data.requests)
         } catch (err) {
             console.error(err)
             setError('Something went wrong while fetching driver requests.')
@@ -22,11 +22,11 @@ function DriverDashboard() {
     }, [])
 
     if (errorMsg) return <h2>{errorMsg}</h2>
-    if (!products.length) return <h2>No requests found.</h2>
+    if (!requests.length) return <h2>No requests found.</h2>
 
     return (
         <>
-        {products.map(props => (
+        {requests.map(props => (
         <div key={props.id}>
                 <RequestCard props={props}  />
                 </div>
