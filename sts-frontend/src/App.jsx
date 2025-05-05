@@ -6,6 +6,8 @@ import Login from './pages/LoginPage';
 import CustomerDashboard from './pages/CustomerDashboard';
 import AddProduct from './pages/AddProduct';
 import ProductDetail from './pages/ProductDetail';
+import EditProduct from './pages/EditProduct';
+
 
 function App() {
   return (
@@ -17,6 +19,7 @@ function App() {
         <Route path="/CustomerDashboard" element={<CustomerDashboard />} />
         <Route path="/products/add" element={<AddProduct />} />
         <Route path="/products/:id" element={<ProductDetail />} />
+        <Route path="/products/:id/edit" element={<EditProduct />} />
       </Routes>
     </Router>
   );
