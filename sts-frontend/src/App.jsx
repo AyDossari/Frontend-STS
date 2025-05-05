@@ -5,6 +5,7 @@ import DriverSignup from './pages/DriverSignup';
 import Login from './pages/LoginPage';
 import CustomerDashboard from './pages/CustomerDashboard';
 import AddProduct from './pages/AddProduct';
+import ProductDetail from './pages/ProductDetail';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/CustomerDashboard" element={<CustomerDashboard />} />
         <Route path="/products/add" element={<AddProduct />} />
+        <Route path="/products/:id" element={<ProductDetail />} />
       </Routes>
     </Router>
   );

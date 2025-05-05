@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import ProductCard from '../components/ProductsCard'
 import { authorizedRequest } from '../lib/api'
+import { Link } from 'react-router-dom';
 
 function CustomerDashboard() {
     const [products, setProducts] = useState([])
@@ -26,8 +27,11 @@ function CustomerDashboard() {
 
     return (
         <>
-            {products.map(props => (
-                <ProductCard key={props.id} props={props}  />
+        {products.map(props => (
+        <div key={props.id}>
+                <ProductCard props={props}  />
+                <Link to={`/products/${props.id}`}>View Details</Link>   
+                </div>
             ))}
         </>
     )
