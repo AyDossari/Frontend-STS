@@ -15,8 +15,11 @@ async function refreshAccessToken() {
             `${baseUrl}/token/refresh/`,
             { refresh: refreshToken }
         )
+        const newAccessToken = response.data.access
         setTokens({ access: response.data.access })
         console.log('access token has been refreshed')
+        return newAccessToken  
+
     }
 }
 
@@ -51,11 +54,16 @@ async function authorizedRequest(method, url, data = null) {
                 return retriedResponse
             } catch (err) {
                 console.log(err)
-                window.location.href = '/signup'
+                window.location.href = '/login'
             }
             
         }
     }
 }
 
-export { setTokens, authorizedRequest }
+function logout() {
+    localStorage.removeItem('access_token')
+    localStorage.removeItem('refresh_token')
+  }
+
+export { setTokens, authorizedRequest , logout }

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { setTokens } from '../lib/api'
+import { setTokens, authorizedRequest } from '../lib/api'
 import axios from 'axios'
 import LoginForm from '../components/LoginForm'
 import { useNavigate } from 'react-router-dom'
@@ -32,7 +32,22 @@ function Login() {
         access: response.data.access,
         refresh: response.data.refresh
       })
-      navigate('/products')
+
+      try {
+        const driverProfile = await authorizedRequest('get', '/driver/profile/')
+        if (driverProfile?.data) {
+          navigate('/DriverDashboard')
+        } else {
+          navigate('/CustomerDashboard')
+        }
+      } catch (err) {
+        if (err?.response?.status === 404) {
+          navigate('/CustomerDashboard')
+        } else {
+          console.error('Unexpected error', err)
+          navigate('/login')
+        }
+      }
 
     } catch (err) {
       console.log(err)

@@ -8,12 +8,16 @@ import DriverDashboard from './pages/DriverDashboard';
 import AddProduct from './pages/AddProduct';
 import AddRequest from './pages/AddRequest';
 import ProductDetail from './pages/ProductDetail';
+import RequestDetail from './pages/RequestDetail';
 import EditProduct from './pages/EditProduct';
+import EditRequest from './pages/EditRequest';
+import Navbar from './components/NavBar';
 
 
 function App() {
   return (
     <Router>
+      <Navbar/>
       <Routes>
         <Route path="/signup/customer" element={<CustomerSignup />} />
         <Route path="/signup/driver" element={<DriverSignup />} />
@@ -23,7 +27,9 @@ function App() {
         <Route path="/products/add" element={<AddProduct />} />
         <Route path="/Request/add" element={<AddRequest />} />
         <Route path="/products/:id" element={<ProductDetail />} />
+        <Route path="/Requests/:id" element={<RequestDetail />} />
         <Route path="/products/:id/edit" element={<EditProduct />} />
+        <Route path="/Requests/:id/edit" element={<EditRequest />} />
       </Routes>
     </Router>
   );

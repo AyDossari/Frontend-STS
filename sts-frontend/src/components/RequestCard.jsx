@@ -29,9 +29,9 @@ if (!productDetail) return <p>Loading...</p>;
       <h4>{productDetail.name}</h4>
       {isDetail ? (
         <>
-          <p>Description : {productDetail.product.description}</p>
-          <p>weight : {productDetail.product.weight}</p>
-          <p>serial number : {productDetail.product.serial_number}</p>
+          <p>Description : {productDetail.description}</p>
+          <p>weight : {productDetail.weight}</p>
+          <p>serial number : {productDetail.serial_number}</p>
           <p>Created at: {props.created_at} </p>
         </>
       ) : (

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import RequestCard from '../components/RequestCard'
-import { authorizedRequest } from '../lib/api'
+import { authorizedRequest , logout } from '../lib/api'
+import { Link } from 'react-router-dom';
 
 
 function DriverDashboard() {
@@ -29,6 +30,7 @@ function DriverDashboard() {
         {requests.map(props => (
         <div key={props.id}>
                 <RequestCard props={props}  />
+                <Link to={`/Requests/${props.id}`}>View Details</Link>
                 </div>
             ))}
         </>
