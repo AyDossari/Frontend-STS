@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import RequestCard from '../components/RequestCard'
 import { authorizedRequest , logout } from '../lib/api'
+import LogoutButton from '../components/LogoutButton';
 import { Link } from 'react-router-dom';
 
 
@@ -23,16 +24,37 @@ function DriverDashboard() {
     }, [])
 
     if (errorMsg) return <h2>{errorMsg}</h2>
-    if (!requests.length) return <h2>No requests found.</h2>
+    if (!requests.length) {
+        return (
+          <div className="container mt-5 text-center">
+            <h2>No requests found.</h2>
+            <div className="mt-3 d-flex justify-content-between">
+              <LogoutButton />
+              <Link to="/request/add" className="btn btn-dark">
+                Add New request
+              </Link>
+            </div>
+          </div>
+        )
+      }
 
     return (
         <>
-        {requests.map(props => (
-        <div key={props.id}>
-                <RequestCard props={props}  />
-                <Link to={`/Requests/${props.id}`}>View Details</Link>
+            <div className="container mt-4">
+                <div className="row">
+                    {requests.map(props => (
+                        <div key={props.id} className="col-md-4 mb-4">
+                            <RequestCard props={props}  />
+                        </div>
+                    ))}
                 </div>
-            ))}
+                <div className="mt-3 d-flex justify-content-between">
+                    <LogoutButton />
+                    <Link to="/Request/add" className="btn btn-dark">
+                        Add New Requests
+                    </Link>
+                </div>
+            </div>
         </>
     )
 }

@@ -11,14 +11,18 @@ import ProductDetail from './pages/ProductDetail';
 import RequestDetail from './pages/RequestDetail';
 import EditProduct from './pages/EditProduct';
 import EditRequest from './pages/EditRequest';
+import HomePage from'./pages/HomePage';
 import Navbar from './components/NavBar';
 
 
 function App() {
+
+  
   return (
     <Router>
-      <Navbar/>
+         <Navbar />
       <Routes>
+        <Route path="/" element={<HomePage />} />
         <Route path="/signup/customer" element={<CustomerSignup />} />
         <Route path="/signup/driver" element={<DriverSignup />} />
         <Route path="/login" element={<Login />} />

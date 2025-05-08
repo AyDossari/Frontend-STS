@@ -66,3 +66,16 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+.form-control:focus {
+    color: var(--bs-body-color);
+    background-color: var(--bs-body-bg);
+    border-color: #2125297a;
+    outline: 0;
+    box-shadow: 0 0 0 .25rem rgb(33 37 41 / 23%);
+}
+
+.btnDelete:hover {
+  color: var(--bs-btn-hover-color);
+  background-color: #bc1919;
+  border-color: var(--bs-btn-hover-border-color);
+}

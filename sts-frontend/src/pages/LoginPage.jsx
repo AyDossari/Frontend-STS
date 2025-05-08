@@ -64,8 +64,8 @@ function Login() {
       password={formData.password}
       setPassword={(value) => setFormData({ ...formData, password: value })}
       handleSubmit={handleSubmit}
-    />
-        {error && <p style={{ color: 'red' }}>{error}</p>}    
+      error={error}
+    />  
     </div>
   )
 }

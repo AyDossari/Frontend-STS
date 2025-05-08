@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { authorizedRequest } from '../lib/api';
-import RequestCard from '../components/RequestCard';
+import DetailsCard from '../components/DetailsCard';
 
 function RequestDetail() {
   const { id } = useParams();
@@ -38,9 +38,7 @@ function RequestDetail() {
 
   return (
     <div>
-      <RequestCard props={request} isDetail={true} />
-      <Link to={`/Requests/${id}/edit`}> Edit Product </Link>
-      <button onClick={handleDelete}>Cancel</button>
+      <DetailsCard props={request} />
     </div>
   );
 }

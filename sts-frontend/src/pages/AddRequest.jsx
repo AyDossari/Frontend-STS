@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authorizedRequest } from '../lib/api';
 import ProductCard from '../components/ProductsCard';
+import { Link } from 'react-router-dom';
 
 function AddRequest() {
   const [products, setProducts] = useState([]);
@@ -39,13 +40,20 @@ function AddRequest() {
 
   return (
     <>
-      <h2>Available Products</h2>
-      {products.map(product => (
-        <div key={product.id}>
-          <ProductCard props={product} />
-          <button onClick={() => handlePickup(product.id)}>Pick Up</button>
-        </div>
-      ))}
+            <div className="container mt-4">
+                <div className="row">
+                    {products.map(props => (
+                        <div key={props.id} className="col-md-4 mb-4">
+                            <ProductCard props={props} handlePickup={handlePickup} isDetail={true} isDriverView={true} />
+                        </div>
+                    ))}
+                </div>
+                <div className="mt-3 d-flex justify-content-between">
+                    <Link to="/DriverDashboard" className="btn btn-dark">
+                        Back
+                    </Link>
+                </div>
+            </div>
     </>
   );
 }
