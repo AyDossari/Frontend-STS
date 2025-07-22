@@ -53,7 +53,7 @@ Make sure the backend server is running on the same port as specified in your `.
 Below are key screens from the frontend application showing the flow for both customers and drivers:
 
 ### 1. **Home Page** – Landing screen with options for login/signup  
-   ![Home Page](./src/assets/HomePage.png)
+   ![Home Page](./src/assets/HomePage.gif)
   
 ### 2. **Signup Page** – Form to register as a customer or driver  
    ![Signup Page](./src/assets/Signup.png)
