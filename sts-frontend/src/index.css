@@ -110,6 +110,15 @@
   --sidebar-ring: oklch(0.552 0.016 285.938);
 }
 
+@keyframes loadingFill {
+  0% {
+    background-position: 100% 0%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

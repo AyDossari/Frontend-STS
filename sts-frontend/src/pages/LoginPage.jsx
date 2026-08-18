@@ -1,73 +1,69 @@
-import { useState } from 'react'
-import { setTokens, authorizedRequest } from '../lib/api'
-import axios from 'axios'
-import LoginForm from '../components/LoginForm'
-import { useNavigate } from 'react-router-dom'
+﻿import { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import LoginForm from '../components/LoginForm';
+import { setTokens, authorizedRequest } from '../lib/api';
 
 function Login() {
   const [formData, setFormData] = useState({
     username: '',
-    password: ''
-  })
+    password: '',
+  });
 
-  const [error, setError] = useState('')
-  const navigate = useNavigate()
-
-
-  const handleChange = (event) => {
-    setFormData({
-      ...formData,
-      [event.target.name]: event.target.value
-    })
-  }
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     const apiUrl = import.meta.env.VITE_API_URL;
-    event.preventDefault()
-    setError('')
+    event.preventDefault();
+    setError('');
+    setIsLoading(true);
 
     try {
-      const response = await axios.post(`${apiUrl}/api/token/`, formData)
+      const response = await axios.post(`${apiUrl}/api/token/`, formData);
       setTokens({
         access: response.data.access,
-        refresh: response.data.refresh
-      })
+        refresh: response.data.refresh,
+      });
 
       try {
-        const driverProfile = await authorizedRequest('get', '/driver/profile/')
+        const driverProfile = await authorizedRequest('get', '/driver/profile/');
         if (driverProfile?.data) {
-          navigate('/DriverDashboard')
+          navigate('/DriverDashboard');
         } else {
-          navigate('/CustomerDashboard')
+          navigate('/CustomerDashboard');
         }
       } catch (err) {
+        setIsLoading(false);
         if (err?.response?.status === 404) {
-          navigate('/CustomerDashboard')
+          navigate('/CustomerDashboard');
         } else {
-          console.error('Unexpected error', err)
-          navigate('/login')
+          console.error('Unexpected error', err);
+          navigate('/login');
         }
       }
-
     } catch (err) {
-      console.log(err)
-      setError('Invalid username or password')
+      console.log(err);
+      setIsLoading(false);
+      setError('Invalid username or password');
     }
-  }
+  };
 
   return (
     <div>
-    <LoginForm
-      title="Login"
-      username={formData.username}
-      setUsername={(value) => setFormData({ ...formData, username: value })}
-      password={formData.password}
-      setPassword={(value) => setFormData({ ...formData, password: value })}
-      handleSubmit={handleSubmit}
-      error={error}
-    />  
+      <LoginForm
+        title="Login"
+        username={formData.username}
+        password={formData.password}
+        setUsername={(value) => setFormData((prev) => ({ ...prev, username: value }))}
+        setPassword={(value) => setFormData((prev) => ({ ...prev, password: value }))}
+        handleSubmit={handleSubmit}
+        error={error}
+        isLoading={isLoading}
+      />
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;
