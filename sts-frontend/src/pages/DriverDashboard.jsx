@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import RequestCard from '../components/RequestCard'
-import { authorizedRequest , logout } from '../lib/api'
+import { authorizedRequest } from '../lib/api'
 import LogoutButton from '../components/LogoutButton';
 import { Link } from 'react-router-dom';
 

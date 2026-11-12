@@ -47,14 +47,14 @@ function RoutesWithPixelCurtains() {
 
   const curtainProps = useMemo(
     () => ({
-      duration: 900,
+      duration: 600,
       gridSize: pixelCurtainDebug ? { rows: 10, cols: 10 } : undefined,
-      pixelSize: 44,
-      direction: 'diagonal-tl-br',
+      pixelSize: 100,
+      direction: 'top-bottom',
       easing: 'easeInOut',
-      colors: ['#ffffff', '#ffffff', '#ffffff'],
+      colors: ['oklch(0.96 0.02 272)','oklch(0.21 0.01 286)'],
       softness: 0.2,
-      jitter: 0.12,
+      jitter: 0.40,
       zIndex: 80,
       debug: pixelCurtainDebug,
       debugBorder: pixelCurtainDebug,

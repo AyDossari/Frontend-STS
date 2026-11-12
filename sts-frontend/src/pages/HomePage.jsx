@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { useEffect, useState } from "react"
-import { motion } from "framer-motion";
+import { motion as Motion } from "motion/react";
 
 function HomePage() {
   const [order, setOrder] = useState(initialOrder)
@@ -13,13 +13,13 @@ function HomePage() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-background">
-      <motion.div
+      <Motion.div
         className="flex gap-6 mb-10"
         variants={containerCards}
         initial="hidden"
         animate="visible"
       >
-        <motion.div variants={itemCards}>
+        <Motion.div variants={itemCards}>
           <Link to="/signup/customer" className="no-underline text-foreground">
             <Card className="w-[220px] text-center shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out cursor-pointer">
               <CardHeader className="p-6">
@@ -36,9 +36,9 @@ function HomePage() {
               </CardHeader>
             </Card>
           </Link>
-        </motion.div>
+        </Motion.div>
 
-        <motion.div variants={itemCards}>
+        <Motion.div variants={itemCards}>
           <Link to="/login" className="no-underline text-foreground">
             <Card className="w-[220px] text-center shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out cursor-pointer">
               <CardHeader className="p-6">
@@ -54,8 +54,9 @@ function HomePage() {
               </CardHeader>
             </Card>
           </Link>
-        </motion.div>
-        <motion.div variants={itemCards}>
+        </Motion.div>
+
+        <Motion.div variants={itemCards}>
           <Link to="/signup/driver" className="no-underline text-foreground">
             <Card className="w-[220px] text-center shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out cursor-pointer">
               <CardHeader className="p-6">
@@ -73,13 +74,13 @@ function HomePage() {
               </CardHeader>
             </Card>
           </Link>
-        </motion.div>
-      </motion.div>
+        </Motion.div>
+      </Motion.div>
 
       <div style={wrapper}>
         <ul style={container}>
           {order.map((backgroundColor) => (
-            <motion.li
+            <Motion.li
               key={backgroundColor}
               layout
               transition={spring}
@@ -87,14 +88,14 @@ function HomePage() {
             />
           ))}
         </ul>
-        <motion.p
+        <Motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
           style={projectName}
         >
           Storage Tracker System
-        </motion.p>
+        </Motion.p>
       </div>
     </div>
   )
@@ -105,7 +106,6 @@ const initialOrder = ["hsl(0 0% 98%)", "hsl(240 5% 64.9%)", "hsl(240 5.2% 33.9%)
 function shuffle(array) {
   return [...array].sort(() => Math.random() - 0.5)
 }
-
 
 const spring = {
   type: "spring",

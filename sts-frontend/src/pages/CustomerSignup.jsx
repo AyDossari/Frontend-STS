@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import SignupForm from '../components/SignupForm';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
 function CustomerSignup() {
   const [username, setUsername] = useState('');
@@ -10,25 +10,43 @@ function CustomerSignup() {
   const [full_name, setFullName] = useState('');
   const [address, setAddress] = useState('');
   const [phone_number, setPhoneNumber] = useState('');
-  const navigate = useNavigate()
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const apiUrl = import.meta.env.VITE_API_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+    setIsLoading(true);
+
     try {
-     const response = await axios.post(`${apiUrl}/signup/customer/`,  {
-      username,
-      email,
-      password,
-      full_name,
-      address,
-      phone_number,
-    });
-        console.log('Customer registered:', response.data);
-        navigate('/login')
-    } catch (error) {
-        console.error('Signup failed:', error.response?.data || error.message);
+      const response = await axios.post(`${apiUrl}/signup/customer/`, {
+        username,
+        email,
+        password,
+        full_name,
+        address,
+        phone_number,
+      });
+      console.log('Customer registered:', response.data);
+      navigate('/login');
+    } catch (err) {
+      console.error('Signup failed:', err.response?.data || err.message);
+      setIsLoading(false);
+      const data = err.response?.data;
+      if (err.response?.status === 500) {
+        setError('Registration failed: Username or email may already be in use.');
+      } else if (typeof data === 'string') {
+        setError(data.startsWith('<!DOCTYPE') ? 'Registration failed. Please check your information.' : data);
+      } else if (data && typeof data === 'object') {
+        const firstKey = Object.keys(data)[0];
+        const firstVal = Array.isArray(data[firstKey]) ? data[firstKey][0] : data[firstKey];
+        setError(typeof firstVal === 'string' ? `${firstVal}` : 'Signup failed. Please check your information.');
+      } else {
+        setError('Signup failed. Please try again.');
+      }
     }
   };
 
@@ -49,6 +67,8 @@ function CustomerSignup() {
       showAddress={true}
       phone_number={phone_number}
       setPhoneNumber={setPhoneNumber}
+      error={error}
+      isLoading={isLoading}
     />
   );
 }

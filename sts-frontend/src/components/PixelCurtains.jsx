@@ -105,7 +105,7 @@ function PixelCurtains({
   pixelSize = 52,
   direction = 'left-to-right',
   easing = 'easeInOut',
-  colors = ['oklch(0.99 0.00 0)', 'oklch(0.99 0.00 0)', 'oklch(0.99 0.00 0)'],
+  colors = ['oklch(0.87 0.01 286)','oklch(0.21 0.01 286)'],
   softness = 0.2,
   jitter = 0.14,
   zIndex = 60,

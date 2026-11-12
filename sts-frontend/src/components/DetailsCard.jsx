@@ -1,8 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { authorizedRequest } from '../lib/api';
+import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 
-function DetailsCard({ props, isDetail = false }) {
+function DetailsCard({ props }) {
   const [productDetail, setProductDetail] = useState(null);
   const [showConfirm, setShowConfirm] = useState(false);
   const navigate = useNavigate();
@@ -85,30 +94,24 @@ function DetailsCard({ props, isDetail = false }) {
         </div>
       </div>
 
-
-      {showConfirm && (
-        <div className="modal fade show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}>
-          <div className="modal-dialog modal-dialog-centered">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Confirm Cancel</h5>
-                <button type="button" className="btn-close" onClick={() => setShowConfirm(false)}></button>
-              </div>
-              <div className="modal-body">
-                <p>Are you sure you want to cancel this request?</p>
-              </div>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={() => setShowConfirm(false)}>
-                  Back
-                </button>
-                <button type="button" className="btn btn-danger" onClick={handleCancel}>
-                  Confirm Cancel
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      <Dialog open={showConfirm} onOpenChange={setShowConfirm}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Confirm Cancel</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to cancel this request?
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="flex justify-end gap-2 pt-4">
+            <Button variant="outline" size="sm" onClick={() => setShowConfirm(false)}>
+              Back
+            </Button>
+            <Button variant="destructive" size="sm" onClick={handleCancel}>
+              Confirm Cancel
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

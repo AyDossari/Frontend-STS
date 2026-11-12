@@ -1,9 +1,16 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { authorizedRequest } from '../lib/api';
-import ProductCard from '../components/ProductsCard'
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import ProductCard from '../components/ProductsCard';
+import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 
 function ProductDetail() {
   const { id } = useParams();
@@ -35,7 +42,6 @@ function ProductDetail() {
       setError('Failed to delete product.');
     }
   };
-
 
   if (errorMsg) {
     return (
@@ -77,29 +83,25 @@ function ProductDetail() {
           Back
         </Link>
       </div>
-      {showConfirm && (
-        <div className="modal fade show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}>
-          <div className="modal-dialog modal-dialog-centered">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Confirm Deletion</h5>
-                <button type="button" className="btn-close" onClick={() => setShowConfirm(false)}></button>
-              </div>
-              <div className="modal-body">
-                <p>Are you sure you want to delete this product?</p>
-              </div>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={() => setShowConfirm(false)}>
-                  Cancel
-                </button>
-                <button type="button" className="btn btn-danger" onClick={handleDelete}>
-                  Confirm
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+
+      <Dialog open={showConfirm} onOpenChange={setShowConfirm}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Confirm Deletion</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to delete this product?
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="flex justify-end gap-2 pt-4">
+            <Button variant="outline" size="sm" onClick={() => setShowConfirm(false)}>
+              Cancel
+            </Button>
+            <Button variant="destructive" size="sm" onClick={handleDelete}>
+              Confirm
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

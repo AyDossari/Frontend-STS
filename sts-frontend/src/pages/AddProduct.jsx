@@ -10,10 +10,12 @@ function AddProduct() {
   const [description, setDescription] = useState('');
   const [weight, setWeight] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setIsLoading(true);
 
     try {
       await authorizedRequest('post', '/products/', {
@@ -24,23 +26,26 @@ function AddProduct() {
       navigate('/CustomerDashboard'); 
     } catch (err) {
       console.log(err);
+      setIsLoading(false);
       setError('Failed to add product.');
     }
   };
 
   return (
-    <>
-      {error && <p>{error}</p>}
-      <PostForm
-        name={name}
-        setName={setName}
-        description={description}
-        setDescription={setDescription}
-        weight={weight}
-        setWeight={setWeight}
-        handleSubmit={handleSubmit}
-      />
-    </>
+    <PostForm
+      title="Add New Product"
+      subtitle="Create a new shipment product for pickup"
+      submitText="Add Product"
+      name={name}
+      setName={setName}
+      description={description}
+      setDescription={setDescription}
+      weight={weight}
+      setWeight={setWeight}
+      handleSubmit={handleSubmit}
+      error={error}
+      isLoading={isLoading}
+    />
   );
 }
 

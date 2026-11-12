@@ -12,7 +12,7 @@ async function refreshAccessToken() {
     const refreshToken = localStorage.getItem('refresh_token')
     if (refreshToken) {
         const response = await axios.post(
-            `${baseUrl}/token/refresh/`,
+            `${baseUrl}/api/token/refresh/`,
             { refresh: refreshToken }
         )
         const newAccessToken = response.data.access
@@ -55,9 +55,10 @@ async function authorizedRequest(method, url, data = null) {
             } catch (err) {
                 console.log(err)
                 window.location.href = '/login'
+                throw err;
             }
-            
         }
+        throw err;
     }
 }
 

@@ -1,7 +1,9 @@
 import { useNavigate } from 'react-router-dom'
 import { logout } from '../lib/api'
+import { Button } from '@/components/ui/button'
+import { LogOut } from 'lucide-react'
 
-function LogoutButton() {
+function LogoutButton({ variant = "outline", size = "default", className }) {
   const navigate = useNavigate()
 
   const handleLogout = () => {
@@ -10,9 +12,15 @@ function LogoutButton() {
   }
 
   return (
-    <button onClick={handleLogout} className="btn btn-dark">
+    <Button
+      variant={variant}
+      size={size}
+      onClick={handleLogout}
+      className={className}
+    >
+      <LogOut className="size-4 mr-1.5" />
       Logout
-    </button>
+    </Button>
   )
 }
 
