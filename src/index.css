@@ -123,7 +123,20 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    overflow-x: hidden;
+    max-width: 100%;
+  }
   body {
+    overflow-x: hidden;
+    max-width: 100%;
+    width: 100%;
     @apply bg-background text-foreground;
+  }
+  #root {
+    overflow-x: hidden;
+    max-width: 100%;
+    width: 100%;
+    min-height: 100vh;
   }
 }

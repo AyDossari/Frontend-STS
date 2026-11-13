@@ -48,6 +48,22 @@ Make sure the backend server is running on the same port as specified in your `.
 
 ---
 
+## Testing & Quality Assurance
+
+The application uses automated End-to-End (E2E) testing with **Puppeteer** (following **ISO/IEC/IEEE 29119** standards) to simulate realistic user workflows and edge cases:
+
+```bash
+# Run the automated E2E simulation suite
+npm run test:e2e
+```
+
+**Key Verified Flows:**
+- **Validation & Auth:** Login rejection, duplicate username detection, and password strength checks.
+- **Customer Journey:** Manifest creation, real-time status tracking, updates, and deletion.
+- **Driver Dispatch:** Freight claiming, delivery status updates, and handovers.
+
+---
+
 ## Screenshots
 
 Below are key screens from the frontend application showing the flow for both customers and drivers:
@@ -55,11 +71,17 @@ Below are key screens from the frontend application showing the flow for both cu
 ### 1. **Home Page** – Landing screen with options for login/signup  
    ![Home Page](./src/assets/HomePage.gif)
   
-### 2. **Signup Page** – Form to register as a customer or driver  
-   ![Signup Page](./src/assets/Signup.png)
+### 2. **Signup Page** – Form to register
+
+#### 2.1 **Signup as Customer** – Description here
+   ![Signup Page](./src/assets/SignupShipper.png)
+
+#### 2.2 **Signup as Customer** – Description here
+   ![Signup Page](./src/assets/SignupDriver.png)
+
 
 ### 3. **Customer Dashboard** – Shows a list of the customer's submitted products  
-   ![Customer Dashboard](./src//assets/CustomerDash.png)
+   ![Customer Dashboard](./src//assets/CustomerDash.gif)
 
 ### 4. **Add Product** – Form for customers to create a new product  
    ![Add Product](./src/assets/AddProudct.png)

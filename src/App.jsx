@@ -77,9 +77,9 @@ function RoutesWithPixelCurtains() {
 
   return (
     <>
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen flex flex-col w-full max-w-full overflow-x-hidden">
         <Navbar />
-        <main className="flex-grow">
+        <main className="flex-grow w-full max-w-full overflow-x-hidden">
           <Routes location={displayLocation}>
             {appRoutes.map((route) => (
               <Route key={route.path} path={route.path} element={route.element} />

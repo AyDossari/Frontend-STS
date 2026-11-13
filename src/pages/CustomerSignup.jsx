@@ -53,6 +53,8 @@ function CustomerSignup() {
   return (
     <SignupForm
       title="Customer Sign Up"
+      subtitle="Register as an inventory shipper to submit manifests and track warehouse intake."
+      role="customer"
       handleSubmit={handleSubmit}
       username={username}
       setUsername={setUsername}
