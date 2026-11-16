@@ -78,7 +78,8 @@ function EditProduct() {
   return (
     <PostForm
       title="Edit Product"
-      subtitle="Update the details for this shipment product"
+      subtitle="Update the specifications for this shipment product"
+      badgeText="SPECIFICATION UPDATE"
       submitText="Save Changes"
       handleSubmit={handleSubmit}
       name={name}
@@ -89,6 +90,7 @@ function EditProduct() {
       setWeight={setWeight}
       error={errorMsg}
       isLoading={isLoading || isFetching}
+      onCancel={() => navigate(`/products/${id}`)}
     />
   );
 }

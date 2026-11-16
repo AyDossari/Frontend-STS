@@ -400,6 +400,14 @@ async function runSimulation() {
         if (anyBtn) anyBtn.click();
       }
     }, testProduct2.name);
+    await sleep(500);
+
+    await page.evaluate(() => {
+      const buttons = Array.from(document.querySelectorAll('button'));
+      const confirmBtn = buttons.find(b => b.textContent.includes('Confirm Pickup') || b.textContent.trim() === 'Confirm');
+      if (confirmBtn) confirmBtn.click();
+    });
+
     await sleep(2000);
     await waitForTransition(page);
 

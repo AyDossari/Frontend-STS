@@ -34,7 +34,8 @@ function AddProduct() {
   return (
     <PostForm
       title="Add New Product"
-      subtitle="Create a new shipment product for pickup"
+      subtitle="Register a new cargo item for warehouse staging and driver dispatch."
+      badgeText="CARGO INTAKE"
       submitText="Add Product"
       name={name}
       setName={setName}
@@ -45,6 +46,7 @@ function AddProduct() {
       handleSubmit={handleSubmit}
       error={error}
       isLoading={isLoading}
+      onCancel={() => navigate('/CustomerDashboard')}
     />
   );
 }

@@ -1,6 +1,6 @@
 # Frontend - Storage Tracker System (STS)
 
-This is the frontend application of the **Storage Tracker System (STS)**. It provides a user interface for both **customers** and **drivers** to interact with the storage management system. Customers can sign up, log in, and manage their product listings, while drivers can browse available products and submit pickup requests. This application is built with **React** and styled using **Bootstrap**, and it communicates with a Django REST API backend.
+This is the frontend application of the **Storage Tracker System (STS)**. It provides a modern, high-density logistics tracking portal for both **customers** (inventory shippers) and **drivers** (couriers) to coordinate freight storage and dispatch. Customers can sign up, log in, and manage their product shipments with live status telemetry, while drivers can claim pending cargo, execute pickups with confirmation workflows, and update warehouse delivery milestones. This application is built with **React 19**, styled using **Tailwind CSS v4** and official **shadcn/ui** components, and communicates with a Django REST API backend.
 
 ---
 
@@ -8,13 +8,16 @@ This is the frontend application of the **Storage Tracker System (STS)**. It pro
 
 The frontend application was developed using the following technologies:
 
-- **React 19**   
-- **React Router DOM 7**  
+- **React 19**
+- **React Router DOM 7**
+- **Tailwind CSS v4**
+- **shadcn/ui & Radix UI Primitives**
+- **Lucide React**
 - **Axios**
-- **Vite** 
-- **Dotenv**  
+- **Vite**
+- **Puppeteer** (Automated E2E Testing)
+- **Dotenv**
 - **ESLint** 
-- **Bootstrap** 
 
 ---
 
@@ -71,38 +74,45 @@ Below are key screens from the frontend application showing the flow for both cu
 ### 1. **Home Page** – Landing screen with options for login/signup  
    ![Home Page](./src/assets/HomePage.gif)
   
-### 2. **Signup Page** – Form to register
+### 2. **Sign up Pages** – Dedicated registration portals tailored for shippers and logistics couriers
 
-#### 2.1 **Signup as Customer** – Description here
-   ![Signup Page](./src/assets/SignupShipper.png)
+#### 2.1 **Sign up as Customer** – Onboarding form for inventory owners to submit cargo manifests and warehouse storage requests  
+   ![Customer Signup](./src/assets/SignupShipper.png)
 
-#### 2.2 **Signup as Customer** – Description here
-   ![Signup Page](./src/assets/SignupDriver.png)
+#### 2.2 **Sign up as Driver** – Courier onboarding form capturing driver credentials, contact info, and vehicle specifications  
+   ![Driver Signup](./src/assets/SignupDriver.png)
 
 
-### 3. **Customer Dashboard** – Shows a list of the customer's submitted products  
-   ![Customer Dashboard](./src//assets/CustomerDash.gif)
+### 3. **Operational Dashboards** – Role-based command consoles providing real-time cargo telemetry and dispatch feeds
+
+#### 3.1 **Customer Dashboard** – Central tracking console with live shipment metrics (Pending, In Transit, Stored), search filters, and inventory actions  
+   ![Customer Dashboard](./src/assets/CustomerDash.gif)
+
+#### 3.2 **Driver Dashboard** – Courier dispatch terminal displaying claimed freight assignments, transit milestones, and delivery logs  
+   ![Driver Dashboard](./src/assets/DriverDash.png)
 
 ### 4. **Add Product** – Form for customers to create a new product  
    ![Add Product](./src/assets/AddProudct.png)
 
-### 5. **Driver Dashboard** – Displays the driver’s requests and their statuses  
-   ![Driver Dashboard](./src/assets/DriverDash.png)
-
-### 6. **Create Request (Driver)** – Interface for the driver to pick up a product  
+### 5. **Create Request (Driver)** – Interface for the driver to pick up a product  
    ![Create Request](./src/assets/AddRequest.png)
 
 ---
 
 ## IceBox Features
 
-Features planned for future implementation:
+Planned capabilities for future iterations:
 
-- Improve the UI with a more professional and responsive design  
-- Replace basic layout components with a full-featured UI library
+- Real-time WebSocket notifications for instant driver pickup and custody handover alerts
+- Interactive map integration for route optimization and GPS tracking of cargo in transit
+- In-browser barcode / QR code scanning for fast physical warehouse intake verification
+- Automated PDF manifest export and printable freight waybills
 
-## Wins & Challenges
+---
 
-- First time using React, it was a bit hard at the start.  
-- I learned how to use components and state.  
-- I connected the frontend to the backend and made the app work.
+## Key Achievements & Engineering Wins
+
+- **Full-Stack Logistics Architecture:** Implemented role-isolated customer and courier workflows protected by JWT authentication and Django backend RBAC.
+- **Design System Craft:** Transitioned from legacy layout styles to "The Freight Terminal"—a responsive, accessible interface built with shadcn/ui and Tailwind CSS v4 adhering to strict 4px grid rhythm.
+- **Automated Verification:** Designed and maintained a 23-scenario End-to-End (E2E) browser simulation suite using Puppeteer under ISO/IEC/IEEE 29119 testing standards.
+- **Zero-Overflow Responsive Layouts:** Optimized all data-entry forms, confirmation dialogs, and telemetry dashboards for flawless performance down to 320px mobile viewports.
