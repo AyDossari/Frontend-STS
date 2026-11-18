@@ -447,13 +447,32 @@ async function runSimulation() {
     });
     await waitForTransition(page);
 
-    await page.select('#status', 'PickedUp');
+    const selectStatusOption = async (val, textMatch) => {
+      const el = await page.$('#status');
+      if (el) {
+        const tag = await page.evaluate(e => e.tagName.toLowerCase(), el);
+        if (tag === 'select') {
+          await page.select('#status', val);
+        } else {
+          await el.click();
+          await sleep(400);
+          await page.evaluate((match) => {
+            const items = Array.from(document.querySelectorAll('[role="option"]'));
+            const found = items.find(i => i.getAttribute('data-value') === match || i.innerText.includes(match));
+            if (found) found.click();
+          }, textMatch || val);
+          await sleep(300);
+        }
+      }
+    };
+
+    await selectStatusOption('PickedUp', 'Picked Up');
     await page.click('button[type="submit"]');
     await sleep(2000);
     await waitForTransition(page);
 
     const dashboardStatusPickedUp = await page.evaluate(() => document.body.innerText);
-    if (dashboardStatusPickedUp.includes('PickedUp')) {
+    if (dashboardStatusPickedUp.includes('PickedUp') || dashboardStatusPickedUp.includes('Picked Up')) {
       logResult('Driver', 'Request status updated to PickedUp and verified on Dashboard', 'PASS');
     } else {
       logResult('Driver', 'Request status updated to PickedUp and verified on Dashboard', 'FAIL', { text: dashboardStatusPickedUp });
@@ -475,7 +494,7 @@ async function runSimulation() {
     });
     await waitForTransition(page);
 
-    await page.select('#status', 'Stored');
+    await selectStatusOption('Stored', 'Stored');
     await page.click('button[type="submit"]');
     await sleep(2000);
     await waitForTransition(page);

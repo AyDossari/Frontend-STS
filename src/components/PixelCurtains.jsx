@@ -147,23 +147,24 @@ function PixelCurtains({
     [rows, cols, direction, jitter, colors]
   );
 
-  useEffect(() => {
-    if (debug) {
-      console.log('[PixelCurtains] props', {
-        active,
-        mode,
-        duration,
-        rows,
-        cols,
-        colors,
-      });
-      console.log('[PixelCurtains] tile colors sample', tiles.slice(0, 3).map((tile) => tile.color));
-    }
+  const onCompleteRef = useRef(onComplete);
+  onCompleteRef.current = onComplete;
 
+  useEffect(() => {
+    if (!debug) return;
+    console.log('[PixelCurtains] props', {
+      active,
+      mode,
+      duration,
+      rows,
+      cols,
+      colors,
+    });
+    console.log('[PixelCurtains] tile colors sample', tiles.slice(0, 3).map((tile) => tile.color));
+  }, [debug, active, mode, duration, rows, cols, colors, tiles]);
+
+  useEffect(() => {
     if (!active) {
-      if (debug) {
-        console.log('[PixelCurtains] inactive -> hidden');
-      }
       setVisible(false);
       return undefined;
     }
@@ -186,18 +187,6 @@ function PixelCurtains({
       setProgress(eased);
       frameCounter.current += 1;
 
-      if (debug) {
-        const bucket = Math.floor(t * 10);
-        if (bucket !== debugBucket.current) {
-          debugBucket.current = bucket;
-          console.log('[PixelCurtains] raf progress', {
-            t: Number(t.toFixed(3)),
-            eased: Number(eased.toFixed(3)),
-            frame: frameCounter.current,
-          });
-        }
-      }
-
       if (t < 1) {
         frameId = requestAnimationFrame(tick);
         return;
@@ -205,10 +194,7 @@ function PixelCurtains({
 
       if (!finished) {
         finished = true;
-        if (debug) {
-          console.log('[PixelCurtains] onComplete fired');
-        }
-        onComplete?.();
+        onCompleteRef.current?.();
       }
     };
 
@@ -219,7 +205,7 @@ function PixelCurtains({
         cancelAnimationFrame(frameId);
       }
     };
-  }, [active, duration, easing, onComplete]);
+  }, [active, duration, easing]);
 
   useEffect(() => {
     if (!debug || !visible || tiles.length === 0) return;

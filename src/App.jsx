@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import CustomerSignup from './pages/CustomerSignup';
 import DriverSignup from './pages/DriverSignup';
@@ -13,7 +13,7 @@ import EditProduct from './pages/EditProduct';
 import EditRequest from './pages/EditRequest';
 import HomePage from './pages/HomePage';
 import Navbar from './components/NavBar';
-import { ThemeProvider } from "@/components/theme-provider"
+import { ThemeProvider, useTheme } from "@/components/theme-provider";
 import PixelCurtains from './components/PixelCurtains';
 
 const appRoutes = [
@@ -33,51 +33,104 @@ const appRoutes = [
 
 function RoutesWithPixelCurtains() {
   const location = useLocation();
+  const themeContext = useTheme();
+  const theme = themeContext?.theme || 'dark';
   const [displayLocation, setDisplayLocation] = useState(location);
   const [phase, setPhase] = useState('idle');
-  const [pendingLocation, setPendingLocation] = useState(null);
-  const pixelCurtainDebug = false;
+  const pendingLocationRef = useRef(null);
+
+  // Accessible reduced-motion preference detection
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(() => {
+    if (typeof window === 'undefined' || !window.matchMedia) return false;
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  });
 
   useEffect(() => {
-    if (location.pathname !== displayLocation.pathname || location.search !== displayLocation.search) {
-      setPendingLocation(location);
-      setPhase('cover');
-    }
-  }, [location, displayLocation]);
+    if (typeof window === 'undefined' || !window.matchMedia) return;
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const handleMotionChange = (event) => {
+      setPrefersReducedMotion(event.matches);
+    };
 
+    mediaQuery.addEventListener('change', handleMotionChange);
+    return () => mediaQuery.removeEventListener('change', handleMotionChange);
+  }, []);
+
+  // Theme-aware palette strictly derived from "The Freight Terminal" design spec - Quieter, low-contrast tones
+  const curtainColors = useMemo(() => {
+    if (theme === 'light') {
+      return ['#ffffff', '#fafafa', '#f4f4f5'];
+    }
+    return ['#09090b', '#101013', '#16161a'];
+  }, [theme]);
+
+  // Quieter, understated operational transition: fine-grain tiles, gentle ease-out, low jitter, feathered softness
   const curtainProps = useMemo(
     () => ({
-      duration: 600,
-      gridSize: pixelCurtainDebug ? { rows: 10, cols: 10 } : undefined,
-      pixelSize: 100,
+      duration: 260,
+      pixelSize: 56,
       direction: 'top-bottom',
-      easing: 'easeInOut',
-      colors: ['oklch(0.96 0.02 272)','oklch(0.21 0.01 286)'],
-      softness: 0.2,
-      jitter: 0.40,
+      easing: 'easeOut',
+      colors: curtainColors,
+      softness: 0.36,
+      jitter: 0.10,
       zIndex: 80,
-      debug: pixelCurtainDebug,
-      debugBorder: pixelCurtainDebug,
-      debugOpaque: pixelCurtainDebug,
     }),
-    [pixelCurtainDebug]
+    [curtainColors]
   );
 
-  const handleCoverDone = () => {
-    if (pendingLocation) {
-      setDisplayLocation(pendingLocation);
-      setPendingLocation(null);
-    }
-    setPhase('reveal');
-  };
+  // Route change transition trigger
+  useEffect(() => {
+    const hasChanged =
+      location.pathname !== displayLocation.pathname ||
+      location.search !== displayLocation.search ||
+      location.hash !== displayLocation.hash;
 
-  const handleRevealDone = () => {
+    if (!hasChanged) return;
+
+    if (prefersReducedMotion) {
+      setDisplayLocation(location);
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      return;
+    }
+
+    pendingLocationRef.current = location;
+    setPhase('cover');
+  }, [location, displayLocation, prefersReducedMotion]);
+
+  // Once covered: update location, restore scroll to top, and begin reveal
+  const handleCoverDone = useCallback(() => {
+    if (pendingLocationRef.current) {
+      setDisplayLocation(pendingLocationRef.current);
+      pendingLocationRef.current = null;
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    setPhase('reveal');
+  }, []);
+
+  // Once revealed: settle back to idle
+  const handleRevealDone = useCallback(() => {
     setPhase('idle');
-  };
+  }, []);
+
+  // Defensive timeout failsafe: guarantees transitions never get permanently stuck
+  useEffect(() => {
+    if (phase === 'idle') return;
+
+    const safetyTimer = setTimeout(() => {
+      if (pendingLocationRef.current) {
+        setDisplayLocation(pendingLocationRef.current);
+        pendingLocationRef.current = null;
+      }
+      setPhase('idle');
+    }, 900);
+
+    return () => clearTimeout(safetyTimer);
+  }, [phase]);
 
   return (
     <>
-      <div className="min-h-screen flex flex-col w-full max-w-full overflow-x-hidden">
+      <div className="min-h-screen flex flex-col w-full max-w-full overflow-x-hidden bg-background text-foreground antialiased selection:bg-primary selection:text-primary-foreground">
         <Navbar />
         <main className="flex-grow w-full max-w-full overflow-x-hidden">
           <Routes location={displayLocation}>

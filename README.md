@@ -74,27 +74,30 @@ Below are key screens from the frontend application showing the flow for both cu
 ### 1. **Home Page** – Landing screen with options for login/signup  
    ![Home Page](./src/assets/HomePage.gif)
   
-### 2. **Sign up Pages** – Dedicated registration portals tailored for shippers and logistics couriers
+### 2. **Login Page** – Operator authentication gateway for shippers and courier drivers  
+   ![Login Page](./src/assets/Login.png)
 
-#### 2.1 **Sign up as Customer** – Onboarding form for inventory owners to submit cargo manifests and warehouse storage requests  
+### 3. **Sign up Pages** – Dedicated registration portals tailored for shippers and logistics couriers
+
+#### 3.1 **Sign up as Customer** – Onboarding form for inventory owners to submit cargo manifests and warehouse storage requests  
    ![Customer Signup](./src/assets/SignupShipper.png)
 
-#### 2.2 **Sign up as Driver** – Courier onboarding form capturing driver credentials, contact info, and vehicle specifications  
+#### 3.2 **Sign up as Driver** – Courier onboarding form capturing driver credentials, contact info, and vehicle specifications  
    ![Driver Signup](./src/assets/SignupDriver.png)
 
 
-### 3. **Operational Dashboards** – Role-based command consoles providing real-time cargo telemetry and dispatch feeds
+### 4. **Operational Dashboards** – Role-based command consoles providing real-time cargo telemetry and dispatch feeds
 
-#### 3.1 **Customer Dashboard** – Central tracking console with live shipment metrics (Pending, In Transit, Stored), search filters, and inventory actions  
+#### 4.1 **Customer Dashboard** – Central tracking console with live shipment metrics (Pending, In Transit, Stored), search filters, and inventory actions  
    ![Customer Dashboard](./src/assets/CustomerDash.gif)
 
-#### 3.2 **Driver Dashboard** – Courier dispatch terminal displaying claimed freight assignments, transit milestones, and delivery logs  
+#### 4.2 **Driver Dashboard** – Courier dispatch terminal displaying claimed freight assignments, transit milestones, and delivery logs  
    ![Driver Dashboard](./src/assets/DriverDash.png)
 
-### 4. **Add Product** – Form for customers to create a new product  
+### 5. **Add Product** – Form for customers to create a new product  
    ![Add Product](./src/assets/AddProudct.png)
 
-### 5. **Create Request (Driver)** – Interface for the driver to pick up a product  
+### 6. **Create Request (Driver)** – Interface for the driver to pick up a product  
    ![Create Request](./src/assets/AddRequest.png)
 
 ---
